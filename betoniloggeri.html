@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Betoniloggeri – Bluetooth</title>
+<style>
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#e9eff7;background:#101827;color-scheme:dark}*{box-sizing:border-box}body{margin:0;padding:24px 14px}.app{max-width:620px;margin:auto}h1{font-size:1.65rem;margin:0 0 4px}p{line-height:1.5}.muted{color:#a9b8c9}.panel{background:#1b283a;border:1px solid #34465d;border-radius:15px;padding:18px;margin-top:16px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.reading{font-size:2rem;font-weight:750;margin-top:8px}.label{color:#b6c5d8;font-size:.9rem}.status{font-weight:700}.ok{color:#6ee7b7}.bad{color:#fca5a5}button{background:#36a7df;color:#081524;border:0;border-radius:10px;padding:12px 15px;font-size:1rem;font-weight:700;cursor:pointer}button.secondary{background:#33475e;color:#fff}button:disabled{opacity:.45;cursor:not-allowed}.buttons{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}.row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #34465d;padding:10px 0}.row:last-child{border:0}#notice{white-space:pre-wrap}.small{font-size:.88rem}
+</style>
+</head>
+<body><main class="app">
+<h1>Betoniloggeri</h1><p class="muted">Lämpötilojen ja mittausjakson tilan lukeminen Bluetoothilla</p>
+<section class="panel"><div class="row"><span>Yhteys</span><span class="status" id="connection">Ei yhdistetty</span></div><div class="buttons"><button id="connect">Yhdistä Bluetoothilla</button><button id="refresh" class="secondary" disabled>Päivitä tiedot</button><button id="disconnect" class="secondary" disabled>Katkaise yhteys</button></div><p id="notice" class="muted small" role="status">Yhdistä fyysiseen ESP32-C3-laitteeseen Androidin Chrome-selaimella.</p></section>
+<div class="grid"><section class="panel"><div class="label">Betoni 1</div><div class="reading" id="temp1">— °C</div></section><section class="panel"><div class="label">Betoni 2</div><div class="reading" id="temp2">— °C</div></section></div>
+<section class="panel"><h2 style="margin-top:0;font-size:1.1rem">Loggerin tila</h2><div class="row"><span>Mittaus käynnissä</span><strong id="measurement">—</strong></div><div class="row"><span>Mittausjakso</span><strong id="period">—</strong></div><div class="row"><span>Jakson mittauksia</span><strong id="count">—</strong></div><div class="row"><span>Tiedostomuisti</span><strong id="storage">—</strong></div><div class="row"><span>Anturilukeman aika</span><strong id="timestamp">—</strong></div></section>
+<p class="muted small">Ensimmäinen versio on vain lukemista varten. Arvot päivittyvät yhdistettynä noin 10 sekunnin välein ja Päivitä tiedot -painikkeella. Tiedot eivät ole käytettävissä ilman oikeaa BLE-yhteyttä.</p>
+</main><script>
+'use strict';
+const SERVICE='5c3bca00-0c8f-4a1e-a1b4-49b5d3345d10';
+const STATUS='5c3bca01-0c8f-4a1e-a1b4-49b5d3345d10';
+const READINGS='5c3bca02-0c8f-4a1e-a1b4-49b5d3345d10';
+const el=id=>document.getElementById(id);
+let device=null,server=null,statusChar=null,readingsChar=null,interval=null,busy=false;
+const decoder=new TextDecoder('utf-8');
+function parse(value){const out={};for(const pair of value.split(';')){const pos=pair.indexOf('=');if(pos>0)out[pair.slice(0,pos).trim()]=pair.slice(pos+1).trim()}return out}
+function showNotice(msg){el('notice').textContent=msg}
+function setConnected(connected){el('connection').textContent=connected?'Yhdistetty':'Ei yhdistetty';el('connection').className='status '+(connected?'ok':'');el('connect').disabled=connected;el('refresh').disabled=!connected;el('disconnect').disabled=!connected}
+function clearReadings(){for(const id of ['temp1','temp2','measurement','period','count','storage','timestamp'])el(id).textContent=id.startsWith('temp')?'— °C':'—'}
+function onDisconnected(){if(interval){clearInterval(interval);interval=null}server=null;statusChar=null;readingsChar=null;setConnected(false);clearReadings();showNotice('Bluetooth-yhteys katkesi. Yhdistä uudelleen.')}
+function renderStatus(s){el('measurement').textContent=s.mittaus==='KYLLA'?'Kyllä':s.mittaus==='EI'?'Ei':'—';el('period').textContent=s.jakso||'—';el('count').textContent=s.lukemia||'—';el('storage').textContent=s.muisti==='OK'?'OK':s.muisti==='VIRHE'?'VIRHE':'—';el('storage').className=s.muisti==='OK'?'ok':s.muisti==='VIRHE'?'bad':''}
+function renderReadings(r){const valid=r.tila==='OK';for(const [id,key] of [['temp1','t1'],['temp2','t2']]){const value=Number(r[key]);el(id).textContent=valid&&r[key]!==undefined&&Number.isFinite(value)?value.toFixed(1).replace('.',',')+' °C':'— °C'}el('timestamp').textContent=valid?r.aika||'—':'—';if(!valid)showNotice('Antureiden lukemisessa on virhe: '+(r.tila||'tuntematon'))}
+async function refresh(){if(busy||!server?.connected)return;busy=true;el('refresh').disabled=true;try{const s=decoder.decode(await statusChar.readValue());const r=decoder.decode(await readingsChar.readValue());renderStatus(parse(s));renderReadings(parse(r));if(parse(r).tila==='OK')showNotice('Tiedot luettu loggerilta.')}catch(err){showNotice('Luku epäonnistui: '+err.message)}finally{busy=false;el('refresh').disabled=!server?.connected}}
+el('connect').addEventListener('click',async()=>{if(!navigator.bluetooth){showNotice('Web Bluetooth ei ole käytettävissä. Käytä Androidin Chromea ja avaa sivu HTTPS-osoitteesta.');return}el('connect').disabled=true;showNotice('Valitse Bluetooth-laitteista Betoniloggeri.');try{device=await navigator.bluetooth.requestDevice({filters:[{name:'Betoniloggeri'}],optionalServices:[SERVICE]});device.addEventListener('gattserverdisconnected',onDisconnected);server=await device.gatt.connect();const service=await server.getPrimaryService(SERVICE);statusChar=await service.getCharacteristic(STATUS);readingsChar=await service.getCharacteristic(READINGS);setConnected(true);await refresh();interval=setInterval(refresh,10000)}catch(err){onDisconnected();showNotice('Yhdistäminen epäonnistui tai peruttiin: '+err.message)}finally{if(!server?.connected)el('connect').disabled=false}});
+el('refresh').addEventListener('click',refresh);
+el('disconnect').addEventListener('click',()=>{if(device?.gatt?.connected)device.gatt.disconnect();else onDisconnected()});
+if(!window.isSecureContext)showNotice('Bluetooth vaatii HTTPS-yhteyden. Julkaise tämä sivu esimerkiksi GitHub Pagesissa.');
+</script></body></html>
