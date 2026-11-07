@@ -4,16 +4,16 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Betoniloggeri – Bluetooth</title>
 <style>
-:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#e9eff7;background:#101827;color-scheme:dark}*{box-sizing:border-box}body{margin:0;padding:24px 14px}.app{max-width:620px;margin:auto}h1{font-size:1.65rem;margin:0 0 4px}p{line-height:1.5}.muted{color:#a9b8c9}.panel{background:#1b283a;border:1px solid #34465d;border-radius:15px;padding:18px;margin-top:16px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.reading{font-size:2rem;font-weight:750;margin-top:8px}.label{color:#b6c5d8;font-size:.9rem}.status{font-weight:700}.ok{color:#6ee7b7}.bad{color:#fca5a5}button{background:#36a7df;color:#081524;border:0;border-radius:10px;padding:12px 15px;font-size:1rem;font-weight:700;cursor:pointer}button.secondary{background:#33475e;color:#fff}button:disabled{opacity:.45;cursor:not-allowed}.tabs{display:flex;gap:8px;margin-top:18px}.tabs button{flex:1;background:#26364a;color:#e9eff7;font-size:.9rem;padding:11px 5px}.tabs button.active{background:#36a7df;color:#081524}.hidden{display:none}.hint{border-left:3px solid #36a7df;padding:9px 12px;background:#1b283a;border-radius:5px}.fileinput{display:block;margin:12px 0;max-width:100%}canvas{display:block;width:100%;height:230px;background:#142034;border-radius:8px}.pill{font-size:.78rem;color:#b6c5d8}.buttons{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}.row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #34465d;padding:10px 0}.row:last-child{border:0}#notice{white-space:pre-wrap}.small{font-size:.88rem}
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#e9eff7;background:#101827;color-scheme:dark}*{box-sizing:border-box}body{margin:0;padding:24px 14px}.app{max-width:620px;margin:auto}h1{font-size:1.65rem;margin:0 0 4px}p{line-height:1.5}.muted{color:#a9b8c9}.panel{background:#1b283a;border:1px solid #34465d;border-radius:15px;padding:18px;margin-top:16px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.reading{font-size:2rem;font-weight:750;margin-top:8px}.label{color:#b6c5d8;font-size:.9rem}.status{font-weight:700}.ok{color:#6ee7b7}.bad{color:#fca5a5}button{background:#36a7df;color:#081524;border:0;border-radius:10px;padding:12px 15px;font-size:1rem;font-weight:700;cursor:pointer}button.secondary{background:#33475e;color:#fff}button:disabled{opacity:.45;cursor:not-allowed}.tabs{display:flex;gap:8px;margin-top:18px}.tabs button{flex:1;background:#26364a;color:#e9eff7;font-size:.9rem;padding:11px 5px}.tabs button.active{background:#36a7df;color:#081524}.hidden{display:none}.hint{border-left:3px solid #36a7df;padding:9px 12px;background:#1b283a;border-radius:5px}.fileinput{display:block;margin:12px 0;max-width:100%}canvas{display:block;width:100%;height:230px;background:#142034;border-radius:8px}.pill{font-size:.78rem;color:#b6c5d8}.chart-options{display:flex;flex-wrap:wrap;gap:10px 15px;margin:12px 0}.chart-options label{display:inline-flex;align-items:center;gap:6px;font-size:.88rem;color:#d5e3f3}.chart-options input{accent-color:#36a7df}.chart-note{font-size:.8rem;color:#a9b8c9;margin:8px 0 0}canvas{height:270px}.buttons{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}.row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #34465d;padding:10px 0}.row:last-child{border:0}#notice{white-space:pre-wrap}.small{font-size:.88rem}
 </style>
 </head>
 <body><main class="app">
 <h1>Betoniloggeri</h1><p class="muted">Lämpötilojen ja mittausjakson tilan lukeminen Bluetoothilla</p>
 <nav class="tabs" aria-label="Näkymät"><button class="active" data-tab="live">Mittaus</button><button data-tab="history">Historia</button><button data-tab="settings">Asetukset</button></nav><div id="live"><section class="panel"><div class="row"><span>Yhteys</span><span class="status" id="connection">Ei yhdistetty</span></div><div class="buttons"><button id="connect">Yhdistä Bluetoothilla</button><button id="refresh" class="secondary" disabled>Päivitä tiedot</button><button id="disconnect" class="secondary" disabled>Katkaise yhteys</button></div><p id="notice" class="muted small" role="status">Yhdistä fyysiseen ESP32-C3-laitteeseen Androidin Chrome-selaimella.</p></section>
 <div class="grid"><section class="panel"><div class="label">Betoni 1</div><div class="reading" id="temp1">— °C</div></section><section class="panel"><div class="label">Betoni 2</div><div class="reading" id="temp2">— °C</div></section></div>
-<div class="grid"><section class="panel"><div class="label">Ympäristön lämpötila</div><div class="reading" id="ambientTemp">— °C</div></section><section class="panel"><div class="label">Ilman suhteellinen kosteus</div><div class="reading" id="humidity">— %</div></section></div><p class="muted small">Ympäristömittaukset tulevat käyttöön, kun SHT31-anturi ja sen tiedonsiirto lisätään loggeriin. Anturi sijoitetaan kotelon sisälle.</p>
+<div class="grid"><section class="panel"><div class="label">Ympäristön lämpötila</div><div class="reading" id="ambientTemp">— °C</div></section><section class="panel"><div class="label">Ilman suhteellinen kosteus</div><div class="reading" id="humidity">— %</div></section></div><p class="muted small">Ympäristön lämpötila ja ilmankosteus mitataan SHT45-anturilla. Anturi sijoitetaan kotelon sisälle.</p>
 <section class="panel"><h2 style="margin-top:0;font-size:1.1rem">Loggerin tila</h2><div class="row"><span>Mittaus käynnissä</span><strong id="measurement">—</strong></div><div class="row"><span>Mittausjakso</span><strong id="period">—</strong></div><div class="row"><span>Jakson mittauksia</span><strong id="count">—</strong></div><div class="row"><span>Tiedostomuisti</span><strong id="storage">—</strong></div><div class="row"><span>Anturilukeman aika</span><strong id="timestamp">—</strong></div></section>
-</div><div id="history" class="hidden"><section class="panel"><h2>Mittauskäyrä</h2><p class="muted small">Tässä vaiheessa voit avata loggerin CSV-tiedoston ja tarkastella sitä paikallisesti. Bluetoothilla voit hakea jaksot suoraan loggerilta. Pilvitallennus lisätään myöhemmin.</p><div class="buttons"><button id="loadPeriods" disabled>Hae jaksot Bluetoothilla</button></div><p id="historyNotice" class="muted small">Yhdistä loggeriin Mittaus-välilehdellä.</p><div id="periodList"></div><hr style="border:0;border-top:1px solid #34465d;margin:20px 0"><label for="csv">Tai avaa mittausjakson CSV-tiedosto</label><input class="fileinput" type="file" id="csv" accept=".csv,text/csv"><p id="csvInfo" class="muted small">Ei ladattua tiedostoa</p><canvas id="graph" width="580" height="230" aria-label="Betonin ja ympäristön lämpötilakäyrä"></canvas><h3 style="font-size:1rem;margin:20px 0 10px">Ilman suhteellinen kosteus</h3><canvas id="humidityGraph" width="580" height="230" aria-label="Ilmankosteuden käyrä"></canvas><p class="muted small">Ympäristön käyrät näkyvät, kun CSV sisältää sarakkeet Ymparisto_C ja Ilmankosteus_RH. Vanhojen mittausjaksojen lukeminen toimii edelleen.</p><div class="buttons"><button id="exportCsv" class="secondary" disabled>Lataa avattu CSV</button></div></section></div><div id="settings" class="hidden"><section class="panel"><h2>Asetukset ja käyttöoikeudet</h2><div class="row"><span>Yhteystapa</span><strong>Bluetooth</strong></div><div class="row"><span>Pilvisynkronointi</span><span class="pill">Ei vielä käytössä</span></div><div class="row"><span>Työmaakohtaiset oikeudet</span><span class="pill">Suunniteltu</span></div><div class="row"><span>Loggerikohtaiset oikeudet</span><span class="pill">Suunniteltu</span></div><p class="hint small">Käyttöoikeuksia ei vielä tarkisteta. Ennen pilven käyttöönottoa rakennamme kirjautumisen ja palvelimella tapahtuvan oikeustarkistuksen.</p></section></div><p class="muted small">Ensimmäinen versio on vain lukemista varten. Arvot päivittyvät yhdistettynä noin 10 sekunnin välein ja Päivitä tiedot -painikkeella. Tiedot eivät ole käytettävissä ilman oikeaa BLE-yhteyttä.</p>
+</div><div id="history" class="hidden"><section class="panel"><h2>Mittauskäyrä</h2><p class="muted small">Tässä vaiheessa voit avata loggerin CSV-tiedoston ja tarkastella sitä paikallisesti. Bluetoothilla voit hakea jaksot suoraan loggerilta.</p><div class="buttons"><button id="loadPeriods" disabled>Hae jaksot Bluetoothilla</button></div><p id="historyNotice" class="muted small">Yhdistä loggeriin Mittaus-välilehdellä.</p><div id="periodList"></div><hr style="border:0;border-top:1px solid #34465d;margin:20px 0"><label for="csv">Tai avaa mittausjakson CSV-tiedosto</label><input class="fileinput" type="file" id="csv" accept=".csv,text/csv"><p id="csvInfo" class="muted small">Ei ladattua tiedostoa</p><div class="chart-options" aria-label="Näytettävät lämpötilakäyrät"><label><input type="checkbox" id="showT1" checked> Betoni 1</label><label><input type="checkbox" id="showT2" checked> Betoni 2</label><label><input type="checkbox" id="showAmbient" checked> Ympäristö</label></div><canvas id="graph" width="580" height="270" aria-label="Lämpötila ajan funktiona"></canvas><p class="chart-note">Vaaka-akseli: mittausaika. Pystyakseli: lämpötila (°C).</p><h3 style="font-size:1rem;margin:20px 0 10px">Ilman suhteellinen kosteus</h3><canvas id="humidityGraph" width="580" height="270" aria-label="Ilmankosteus ajan funktiona"></canvas><p class="muted small">Uusissa CSV-tiedostoissa näkyvät myös SHT45:n mittaukset. Vanhat nelisarakkeiset tiedostot toimivat edelleen.</p><div class="buttons"><button id="exportCsv" class="secondary" disabled>Lataa avattu CSV</button></div></section></div><div id="settings" class="hidden"><section class="panel"><h2>Asetukset ja käyttöoikeudet</h2><div class="row"><span>Yhteystapa</span><strong>Bluetooth</strong></div><div class="row"><span>Pilvisynkronointi</span><span class="pill">Ei vielä käytössä</span></div><div class="row"><span>Työmaakohtaiset oikeudet</span><span class="pill">Suunniteltu</span></div><div class="row"><span>Loggerikohtaiset oikeudet</span><span class="pill">Suunniteltu</span></div><p class="hint small">Käyttöoikeuksia ei vielä tarkisteta. Ennen pilven käyttöönottoa rakennamme kirjautumisen ja palvelimella tapahtuvan oikeustarkistuksen.</p></section></div><p class="muted small">Ensimmäinen versio on vain lukemista varten. Arvot päivittyvät yhdistettynä noin 10 sekunnin välein ja Päivitä tiedot -painikkeella. Tiedot eivät ole käytettävissä ilman oikeaa BLE-yhteyttä.</p>
 </main><script>
 'use strict';
 const SERVICE='5c3bca00-0c8f-4a1e-a1b4-49b5d3345d10';
@@ -30,7 +30,7 @@ function setConnected(connected){el('connection').textContent=connected?'Yhdiste
 function clearReadings(){for(const id of ['temp1','temp2','ambientTemp','humidity','measurement','period','count','storage','timestamp'])el(id).textContent=['temp1','temp2','ambientTemp'].includes(id)?'— °C':id==='humidity'?'— %':'—'}
 function onDisconnected(){if(interval){clearInterval(interval);interval=null}server=null;statusChar=null;readingsChar=null;requestChar=null;replyChar=null;transferring=false;setConnected(false);updateHistoryButtons();clearReadings();showNotice('Bluetooth-yhteys katkesi. Yhdistä uudelleen.')}
 function renderStatus(s){el('measurement').textContent=s.mittaus==='KYLLA'?'Kyllä':s.mittaus==='EI'?'Ei':'—';el('period').textContent=s.jakso||'—';el('count').textContent=s.lukemia||'—';el('storage').textContent=s.muisti==='OK'?'OK':s.muisti==='VIRHE'?'VIRHE':'—';el('storage').className=s.muisti==='OK'?'ok':s.muisti==='VIRHE'?'bad':''}
-function renderReadings(r){const valid=r.tila==='OK';for(const [id,key] of [['temp1','t1'],['temp2','t2']]){const value=Number(r[key]);el(id).textContent=valid&&r[key]!==undefined&&Number.isFinite(value)?value.toFixed(1).replace('.',',')+' °C':'— °C'}const ambient=Number(r.ymparisto),humidity=Number(r.kosteus);el('ambientTemp').textContent=valid&&r.ymparisto!==undefined&&Number.isFinite(ambient)?ambient.toFixed(1).replace('.',',')+' °C':'— °C';el('humidity').textContent=valid&&r.kosteus!==undefined&&Number.isFinite(humidity)?humidity.toFixed(1).replace('.',',')+' %':'— %';el('timestamp').textContent=valid?r.aika||'—':'—';if(!valid)showNotice('Antureiden lukemisessa on virhe: '+(r.tila||'tuntematon'))}
+function renderReadings(r){const valid=r.tila==='OK';for(const [id,key] of [['temp1','t1'],['temp2','t2']]){const raw=r[key],value=Number(raw);const missing=raw===undefined||raw===''||raw==='nan'||raw==='NaN'||!Number.isFinite(value)||(key==='t2'&&value===0);el(id).textContent=valid&&!missing?value.toFixed(1).replace('.',',')+' °C':(key==='t2'&&valid?'Ei anturia':'— °C')}const ambient=Number(r.ymparisto),humidity=Number(r.kosteus);el('ambientTemp').textContent=valid&&r.ymparisto!==undefined&&Number.isFinite(ambient)?ambient.toFixed(1).replace('.',',')+' °C':'— °C';el('humidity').textContent=valid&&r.kosteus!==undefined&&Number.isFinite(humidity)?humidity.toFixed(1).replace('.',',')+' %':'— %';el('timestamp').textContent=valid?r.aika||'—':'—';if(!valid)showNotice('Antureiden lukemisessa on virhe: '+(r.tila||'tuntematon'))}
 async function refresh(){if(busy||transferring||!server?.connected)return;busy=true;el('refresh').disabled=true;try{const s=decoder.decode(await statusChar.readValue());const r=decoder.decode(await readingsChar.readValue());renderStatus(parse(s));renderReadings(parse(r));if(parse(r).tila==='OK')showNotice('Tiedot luettu loggerilta.')}catch(err){showNotice('Luku epäonnistui: '+err.message)}finally{busy=false;el('refresh').disabled=!server?.connected}}
 el('connect').addEventListener('click',async()=>{if(!navigator.bluetooth){showNotice('Web Bluetooth ei ole käytettävissä. Käytä Androidin Chromea ja avaa sivu HTTPS-osoitteesta.');return}el('connect').disabled=true;showNotice('Valitse Bluetooth-laitteista Betoniloggeri.');try{device=await navigator.bluetooth.requestDevice({filters:[{name:'Betoniloggeri'}],optionalServices:[SERVICE]});device.addEventListener('gattserverdisconnected',onDisconnected);server=await device.gatt.connect();const service=await server.getPrimaryService(SERVICE);statusChar=await service.getCharacteristic(STATUS);readingsChar=await service.getCharacteristic(READINGS);
 try{requestChar=await service.getCharacteristic(HISTORY_REQUEST);replyChar=await service.getCharacteristic(HISTORY_REPLY)}catch(err){requestChar=null;replyChar=null;}
@@ -99,50 +99,96 @@ async function downloadPeriod(number,expectedSize){
  finally{transferring=false;updateHistoryButtons()}
 }
 el('loadPeriods').addEventListener('click',listPeriods);
+// Tyhjä CSV-kenttä ei ole nolla astetta. Vanhat 4-sarakkeiset CSV:t hyväksytään.
+function csvNumber(value){
+ if(value===undefined || value===null || String(value).trim()==='')return NaN;
+ const n=Number(String(value).trim().replace(',','.'));
+ return Number.isFinite(n)?n:NaN;
+}
+function csvTime(value){
+ if(!value || value==='AIKA_PUUTTUU')return NaN;
+ const match=/^(\d{4})-(\d\d)-(\d\d)[ T](\d\d):(\d\d):(\d\d)$/.exec(value.trim());
+ if(!match)return NaN;
+ const [,y,mo,d,h,mi,se]=match.map(Number);
+ const t=new Date(y,mo-1,d,h,mi,se);
+ if(t.getFullYear()!==y||t.getMonth()!==mo-1||t.getDate()!==d)return NaN;
+ return t.getTime();
+}
+let importedCsv='', currentRows=[];
 function showCsv(content,name){
  const lines=content.replace(/^\uFEFF/,'').trim().split(/\r?\n/);
  const header=lines[0]?.split(';').map(v=>v.trim())||[];
- const a=header.indexOf('Betoni1_C'),b=header.indexOf('Betoni2_C'),c=header.indexOf('Ymparisto_C'),d=header.indexOf('Ilmankosteus_RH');
+ const a=header.indexOf('Betoni1_C'),b=header.indexOf('Betoni2_C'),c=header.indexOf('Ymparisto_C'),d=header.indexOf('Ilmankosteus_RH'),timeCol=header.indexOf('Aika');
  if(a<0||b<0)throw new Error('CSV:n otsikoista puuttuvat Betoni1_C tai Betoni2_C.');
- const rows=lines.slice(1).map(line=>{const parts=line.split(';');return {t1:Number(parts[a]?.replace(',','.')),t2:Number(parts[b]?.replace(',','.')),ambient:c>=0?Number(parts[c]?.replace(',','.')):NaN,humidity:d>=0?Number(parts[d]?.replace(',','.')):NaN}}).filter(r=>Number.isFinite(r.t1)&&Number.isFinite(r.t2));
+ const rows=lines.slice(1).filter(line=>line.trim()).map((line,i)=>{
+  const parts=line.split(';');
+  return {t1:csvNumber(parts[a]),t2:csvNumber(parts[b]),ambient:c>=0?csvNumber(parts[c]):NaN,humidity:d>=0?csvNumber(parts[d]):NaN,time:timeCol>=0?csvTime(parts[timeCol]):NaN,index:i};
+ }).filter(r=>[r.t1,r.t2,r.ambient,r.humidity].some(Number.isFinite));
  if(!rows.length)throw new Error('Tiedostosta ei löytynyt kelvollisia mittauksia.');
- importedCsv=content;el('csvInfo').textContent=name+' – '+rows.length+' mittausta (vain tällä laitteella)';
- el('exportCsv').disabled=false;drawGraph(rows);drawHumidityGraph(rows);
+ currentRows=rows;importedCsv=content;
+ el('csvInfo').textContent=name+' – '+rows.length+' mittausta (vain tällä laitteella)';
+ el('exportCsv').disabled=false;redrawCharts();
 }
+function redrawCharts(){drawChart('graph',currentRows,'temperature');drawChart('humidityGraph',currentRows,'humidity')}
+for(const id of ['showT1','showT2','showAmbient'])el(id).addEventListener('change',redrawCharts);
 
-// Paikallinen CSV-esikatselu: tiedostoa ei lähetetä verkkoon.
-let importedCsv='';
-function drawGraph(rows){
- const canvas=el('graph'),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
+function drawChart(id,rows,kind){
+ const canvas=el(id),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
  ctx.clearRect(0,0,w,h);ctx.fillStyle='#142034';ctx.fillRect(0,0,w,h);
- if(rows.length<2){ctx.fillStyle='#b6c5d8';ctx.font='15px sans-serif';ctx.fillText('Ei riittävästi mittauksia käyrään',18,35);return;}
- const values=rows.flatMap(r=>[r.t1,r.t2,r.ambient]).filter(Number.isFinite);
- if(!values.length)return;
- let min=Math.floor(Math.min(...values)-1),max=Math.ceil(Math.max(...values)+1);
- if(max<=min)max=min+1;
- const L=48,R=w-14,T=15,B=h-35;
- ctx.font='12px sans-serif';ctx.fillStyle='#b6c5d8';ctx.strokeStyle='#35465c';ctx.lineWidth=1;
- for(let i=0;i<=4;i++){let y=T+(B-T)*i/4;ctx.beginPath();ctx.moveTo(L,y);ctx.lineTo(R,y);ctx.stroke();ctx.fillText((max-(max-min)*i/4).toFixed(1)+'°',4,y+4);}
- for(const [key,color] of [['t1','#38bdf8'],['t2','#fbbf24'],['ambient','#6ee7b7']]){
-  ctx.strokeStyle=color;ctx.lineWidth=2;ctx.beginPath();let started=false;
-  rows.forEach((r,i)=>{if(!Number.isFinite(r[key])){started=false;return;}const x=L+(R-L)*i/(rows.length-1),y=B-(r[key]-min)/(max-min)*(B-T);if(!started){ctx.moveTo(x,y);started=true;}else ctx.lineTo(x,y);});ctx.stroke();
+ const series=kind==='humidity'?[['humidity','#a78bfa','Kosteus']]:[
+  ['t1','#38bdf8','Betoni 1','showT1'],['t2','#fbbf24','Betoni 2','showT2'],['ambient','#6ee7b7','Ympäristö','showAmbient']
+ ].filter(s=>el(s[3]).checked);
+ const validSeries=series.filter(s=>rows.some(r=>Number.isFinite(r[s[0]])));
+ if(!rows.length||!validSeries.length){
+  ctx.fillStyle='#b6c5d8';ctx.font='15px sans-serif';
+  ctx.fillText(!rows.length?'Avaa mittaustiedosto':kind==='humidity'?'Ei tallennettuja kosteusmittauksia':'Ei näytettäviä mittauksia',18,35);
+  return;
  }
- ctx.fillStyle='#38bdf8';ctx.fillText('Betoni 1',L,B+22);ctx.fillStyle='#fbbf24';ctx.fillText('Betoni 2',L+95,B+22);ctx.fillStyle='#6ee7b7';ctx.fillText('Ympäristö',L+190,B+22);
+ const L=55,R=w-18,T=18,B=h-55;
+ const values=rows.flatMap(r=>validSeries.map(s=>r[s[0]])).filter(Number.isFinite);
+ let min=Math.min(...values),max=Math.max(...values);
+ const pad=Math.max((max-min)*.12,kind==='humidity'?2:1);
+ min-=pad;max+=pad;
+ if(kind==='humidity'){min=Math.max(0,min);max=Math.min(100,max)}
+ if(max<=min)max=min+1;
+ const timed=rows.every(r=>Number.isFinite(r.time));
+ const xs=timed?rows.map(r=>r.time):rows.map((r,i)=>i);
+ const xMin=Math.min(...xs),xMax=Math.max(...xs);
+ const x=(i)=>L+(R-L)*(xMax===xMin?.5:(xs[i]-xMin)/(xMax-xMin));
+ const y=v=>B-(v-min)/(max-min)*(B-T);
+ ctx.font='12px sans-serif';ctx.textBaseline='middle';ctx.fillStyle='#b6c5d8';
+ for(let i=0;i<=4;i++){
+  const val=max-(max-min)*i/4,yy=T+(B-T)*i/4;
+  ctx.strokeStyle='#35465c';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(L,yy);ctx.lineTo(R,yy);ctx.stroke();
+  ctx.fillText(val.toFixed(1)+(kind==='humidity'?'%':'°'),5,yy);
+ }
+ const ticks=4;
+ for(let i=0;i<=ticks;i++){
+  const xx=L+(R-L)*i/ticks;
+  ctx.strokeStyle='#35465c';ctx.beginPath();ctx.moveTo(xx,T);ctx.lineTo(xx,B);ctx.stroke();
+  let label;
+  if(timed){
+   const date=new Date(xMin+(xMax-xMin)*i/ticks);
+   const dateText=String(date.getDate()).padStart(2,'0')+'.'+String(date.getMonth()+1).padStart(2,'0')+'.';
+   const timeText=String(date.getHours()).padStart(2,'0')+':'+String(date.getMinutes()).padStart(2,'0');
+   label=dateText+' '+timeText;
+  }else label=String(Math.round(1+(rows.length-1)*i/ticks));
+  ctx.fillStyle='#b6c5d8';ctx.textAlign=i===0?'left':i===ticks?'right':'center';ctx.fillText(label,xx,B+17);
+ }
+ ctx.textAlign='center';ctx.fillText(timed?'Päivä ja kellonaika':'Mittauksen numero (aikaleima puuttuu)',(L+R)/2,B+37);ctx.textAlign='left';
+ for(const [key,color] of validSeries){
+  ctx.strokeStyle=color;ctx.lineWidth=2.5;ctx.beginPath();let started=false;
+  rows.forEach((r,i)=>{
+   if(!Number.isFinite(r[key])){started=false;return}
+   if(!started){ctx.moveTo(x(i),y(r[key]));started=true}else ctx.lineTo(x(i),y(r[key]));
+  });
+  ctx.stroke();
+  if(rows.length===1){
+   const v=rows[0][key];if(Number.isFinite(v)){ctx.fillStyle=color;ctx.beginPath();ctx.arc(x(0),y(v),3,0,Math.PI*2);ctx.fill()}
+  }
+ }
 }
-function drawHumidityGraph(rows){
- const canvas=el('humidityGraph'),ctx=canvas.getContext('2d'),w=canvas.width,h=canvas.height;
- ctx.clearRect(0,0,w,h);ctx.fillStyle='#142034';ctx.fillRect(0,0,w,h);
- const valid=rows.filter(r=>Number.isFinite(r.humidity));
- if(valid.length<2){ctx.fillStyle='#b6c5d8';ctx.font='15px sans-serif';ctx.fillText('Ei riittävästi kosteusmittauksia käyrään',18,35);return;}
- const L=48,R=w-14,T=15,B=h-35;
- ctx.font='12px sans-serif';ctx.fillStyle='#b6c5d8';ctx.strokeStyle='#35465c';ctx.lineWidth=1;
- for(let i=0;i<=4;i++){const y=T+(B-T)*i/4;ctx.beginPath();ctx.moveTo(L,y);ctx.lineTo(R,y);ctx.stroke();ctx.fillText((100-i*25)+' %',5,y+4);}
- ctx.strokeStyle='#a78bfa';ctx.lineWidth=2;ctx.beginPath();let started=false;
- rows.forEach((r,i)=>{if(!Number.isFinite(r.humidity)){started=false;return;}const x=L+(R-L)*i/(rows.length-1),y=B-Math.max(0,Math.min(100,r.humidity))/100*(B-T);if(!started){ctx.moveTo(x,y);started=true;}else ctx.lineTo(x,y);});ctx.stroke();
- ctx.fillStyle='#a78bfa';ctx.fillText('Suhteellinen kosteus (% RH)',L,B+22);
-}
-drawGraph([]);
-drawHumidityGraph([]);
+redrawCharts();
 el('csv').addEventListener('change',async event=>{
  const file=event.target.files?.[0];if(!file)return;
  try{showCsv(await file.text(),file.name)}catch(err){el('csvInfo').textContent=err.message}
