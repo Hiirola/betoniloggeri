@@ -1,3 +1,4 @@
+```
 <!doctype html>
 <html lang="fi">
 <head>
@@ -13,9 +14,11 @@
 <div class="grid"><section class="panel"><div class="label">Betoni 1</div><div class="reading" id="temp1">— °C</div></section><section class="panel"><div class="label">Betoni 2</div><div class="reading" id="temp2">— °C</div></section></div>
 <div class="grid"><section class="panel"><div class="label">Ympäristön lämpötila</div><div class="reading" id="ambientTemp">— °C</div></section><section class="panel"><div class="label">Ilman suhteellinen kosteus</div><div class="reading" id="humidity">— %</div></section></div><p class="muted small">Ympäristön lämpötila ja ilmankosteus mitataan SHT45-anturilla. Anturi sijoitetaan kotelon sisälle.</p>
 <section class="panel"><h2 style="margin-top:0;font-size:1.1rem">Loggerin tila</h2><div class="row"><span>Mittaus käynnissä</span><strong id="measurement">—</strong></div><div class="row"><span>Mittausjakso</span><strong id="period">—</strong></div><div class="row"><span>Jakson mittauksia</span><strong id="count">—</strong></div><div class="row"><span>Tiedostomuisti</span><strong id="storage">—</strong></div><div class="row"><span>Anturilukeman aika</span><strong id="timestamp">—</strong></div></section>
-</div><div id="history" class="hidden"><section class="panel"><h2>Mittauskäyrä</h2><p class="muted small">Tässä vaiheessa voit avata loggerin CSV-tiedoston ja tarkastella sitä paikallisesti. Bluetoothilla voit hakea jaksot suoraan loggerilta.</p><div class="buttons"><button id="loadPeriods" disabled>Hae jaksot Bluetoothilla</button></div><p id="historyNotice" class="muted small">Yhdistä loggeriin Mittaus-välilehdellä.</p><div id="periodList"></div><hr style="border:0;border-top:1px solid #34465d;margin:20px 0"><label for="csv">Tai avaa mittausjakson CSV-tiedosto</label><input class="fileinput" type="file" id="csv" accept=".csv,text/csv"><p id="csvInfo" class="muted small">Ei ladattua tiedostoa</p><div class="chart-options" aria-label="Näytettävät lämpötilakäyrät"><label><input type="checkbox" id="showT1" checked> Betoni 1</label><label><input type="checkbox" id="showT2" checked> Betoni 2</label><label><input type="checkbox" id="showAmbient" checked> Ympäristö</label></div><canvas id="graph" width="580" height="270" aria-label="Lämpötila ajan funktiona"></canvas><p class="chart-note">Vaaka-akseli: mittausaika. Pystyakseli: lämpötila (°C).</p><h3 style="font-size:1rem;margin:20px 0 10px">Ilman suhteellinen kosteus</h3><canvas id="humidityGraph" width="580" height="270" aria-label="Ilmankosteus ajan funktiona"></canvas><p class="muted small">Uusissa CSV-tiedostoissa näkyvät myös SHT45:n mittaukset. Vanhat nelisarakkeiset tiedostot toimivat edelleen.</p><div class="buttons"><button id="exportCsv" class="secondary" disabled>Lataa avattu CSV</button></div></section></div><div id="settings" class="hidden"><section class="panel"><h2>Asetukset ja käyttöoikeudet</h2><div class="row"><span>Yhteystapa</span><strong>Bluetooth</strong></div><div class="row"><span>Pilvisynkronointi</span><span class="pill">Ei vielä käytössä</span></div><div class="row"><span>Työmaakohtaiset oikeudet</span><span class="pill">Suunniteltu</span></div><div class="row"><span>Loggerikohtaiset oikeudet</span><span class="pill">Suunniteltu</span></div><p class="hint small">Käyttöoikeuksia ei vielä tarkisteta. Ennen pilven käyttöönottoa rakennamme kirjautumisen ja palvelimella tapahtuvan oikeustarkistuksen.</p></section></div><p class="muted small">Ensimmäinen versio on vain lukemista varten. Arvot päivittyvät yhdistettynä noin 10 sekunnin välein ja Päivitä tiedot -painikkeella. Tiedot eivät ole käytettävissä ilman oikeaa BLE-yhteyttä.</p>
+</div><div id="history" class="hidden"><section class="panel"><h2>Pilvihistoria</h2><p class="muted small">Pilveen viimeksi synkronoidut mittaukset näkyvät myös ilman Bluetooth-yhteyttä.</p><div class="buttons"><button id="loadCloud">Hae pilvitiedot</button></div><p id="cloudNotice" class="muted small">Pilvitietoja ei ole vielä haettu.</p><div id="cloudPeriods"></div></section><section class="panel"><h2>Mittauskäyrä</h2><p class="muted small">Voit myös hakea mittausjaksot suoraan loggerilta Bluetoothilla tai avata CSV-tiedoston.</p><div class="buttons"><button id="loadPeriods" disabled>Hae jaksot Bluetoothilla</button></div><p id="historyNotice" class="muted small">Yhdistä loggeriin Mittaus-välilehdellä.</p><div id="periodList"></div><hr style="border:0;border-top:1px solid #34465d;margin:20px 0"><label for="csv">Tai avaa mittausjakson CSV-tiedosto</label><input class="fileinput" type="file" id="csv" accept=".csv,text/csv"><p id="csvInfo" class="muted small">Ei ladattua tiedostoa</p><div class="chart-options" aria-label="Näytettävät lämpötilakäyrät"><label><input type="checkbox" id="showT1" checked> Betoni 1</label><label><input type="checkbox" id="showT2" checked> Betoni 2</label><label><input type="checkbox" id="showAmbient" checked> Ympäristö</label></div><canvas id="graph" width="580" height="270" aria-label="Lämpötila ajan funktiona"></canvas><p class="chart-note">Vaaka-akseli: mittausaika. Pystyakseli: lämpötila (°C).</p><h3 style="font-size:1rem;margin:20px 0 10px">Ilman suhteellinen kosteus</h3><canvas id="humidityGraph" width="580" height="270" aria-label="Ilmankosteus ajan funktiona"></canvas><p class="muted small">Uusissa CSV-tiedostoissa näkyvät myös SHT45:n mittaukset. Vanhat nelisarakkeiset tiedostot toimivat edelleen.</p><div class="buttons"><button id="exportCsv" class="secondary" disabled>Lataa avattu CSV</button></div></section></div><div id="settings" class="hidden"><section class="panel"><h2>Asetukset ja käyttöoikeudet</h2><div class="row"><span>Yhteystapa</span><strong>Bluetooth</strong></div><div class="row"><span>Pilvisynkronointi</span><span class="pill">Ei vielä käytössä</span></div><div class="row"><span>Työmaakohtaiset oikeudet</span><span class="pill">Suunniteltu</span></div><div class="row"><span>Loggerikohtaiset oikeudet</span><span class="pill">Suunniteltu</span></div><p class="hint small">Käyttöoikeuksia ei vielä tarkisteta. Ennen pilven käyttöönottoa rakennamme kirjautumisen ja palvelimella tapahtuvan oikeustarkistuksen.</p></section></div><p class="muted small">Ensimmäinen versio on vain lukemista varten. Arvot päivittyvät yhdistettynä noin 10 sekunnin välein ja Päivitä tiedot -painikkeella. Suorat anturilukemat vaativat BLE-yhteyden; pilvihistoria toimii ilman sitä.</p>
 </main><script>
 'use strict';
+const SUPABASE_URL='https://qijwytwsmghlntvhykti.supabase.co';
+const SUPABASE_KEY='sb_publishable_HCkZppcskf7cuIZXnl-g8Q_jxEE5ioR';
 const SERVICE='5c3bca00-0c8f-4a1e-a1b4-49b5d3345d10';
 const STATUS='5c3bca01-0c8f-4a1e-a1b4-49b5d3345d10';
 const READINGS='5c3bca02-0c8f-4a1e-a1b4-49b5d3345d10';
@@ -99,6 +102,61 @@ async function downloadPeriod(number,expectedSize){
  finally{transferring=false;updateHistoryButtons()}
 }
 el('loadPeriods').addEventListener('click',listPeriods);
+// Pilvihistorian julkinen, vain lukeva yhteys. Ei muuta Bluetooth-toimintoja.
+const cloudHeaders={apikey:SUPABASE_KEY};
+async function cloudGet(query){
+ const response=await fetch(SUPABASE_URL+'/rest/v1/measurements?'+query,{headers:cloudHeaders,cache:'no-store'});
+ if(!response.ok)throw new Error('Supabase HTTP '+response.status+': '+(await response.text()).slice(0,220));
+ return response.json();
+}
+function cloudNotice(message){el('cloudNotice').textContent=message}
+async function loadCloudPeriods(){
+ const button=el('loadCloud');button.disabled=true;el('cloudPeriods').replaceChildren();
+ cloudNotice('Haetaan pilvestä mittausjaksoja...');
+ try{
+  // Vain ryhmittelyä varten. Ensimmäinen versio rajataan 1000 mittausriviin;
+  // tätä laajennetaan myöhemmin suurempia aineistoja varten.
+  const rows=await cloudGet('select=logger_id,session_id&order=received_at.desc&limit=1000');
+  const seen=new Set();
+  for(const row of rows){
+   const key=JSON.stringify([row.logger_id,row.session_id]);if(seen.has(key))continue;seen.add(key);
+   const line=document.createElement('div');line.className='row';
+   const label=document.createElement('span');label.textContent='Loggeri '+row.logger_id+' / jakso '+row.session_id;
+   const btn=document.createElement('button');btn.className='secondary';btn.textContent='Näytä käyrä';
+   btn.addEventListener('click',()=>loadCloudSession(row.logger_id,row.session_id));
+   line.append(label,btn);el('cloudPeriods').append(line);
+  }
+  cloudNotice(seen.size?'Pilvestä löytyi '+seen.size+' mittausjaksoa. Valitse jakso.':'Pilvessä ei vielä ole mittauksia. Tämä on normaalia ennen ensimmäistä synkronointia.');
+  if(rows.length===1000)cloudNotice('Näytetään enintään 1000 viimeisintä mittausriviä. Vanhemmat jaksot eivät välttämättä näy vielä.');
+ }catch(err){cloudNotice('Pilvitietojen haku epäonnistui: '+err.message)}
+ finally{button.disabled=false}
+}
+function cloudValue(value){return value===null||value===undefined?'':String(value)}
+function cloudTime(value){
+ if(!value)return 'AIKA_PUUTTUU';
+ const date=new Date(value);if(Number.isNaN(date.getTime()))return 'AIKA_PUUTTUU';
+ const pad=n=>String(n).padStart(2,'0');
+ return date.getFullYear()+'-'+pad(date.getMonth()+1)+'-'+pad(date.getDate())+' '+pad(date.getHours())+':'+pad(date.getMinutes())+':'+pad(date.getSeconds());
+}
+async function loadCloudSession(loggerId,sessionId){
+ cloudNotice('Ladataan jakson mittauksia pilvestä...');
+ try{
+  const all=[];
+  for(let offset=0;offset<100000;offset+=1000){
+   const query='select=measurement_number,measured_at,concrete_1_c,concrete_2_c,ambient_c,humidity_pct&logger_id=eq.'+encodeURIComponent(loggerId)+'&session_id=eq.'+encodeURIComponent(sessionId)+'&order=measurement_number.asc&limit=1000&offset='+offset;
+   const page=await cloudGet(query);all.push(...page);
+   if(page.length<1000)break;
+  }
+  if(!all.length)throw new Error('Jaksolta ei löytynyt mittauksia.');
+  if(all.length>=100000)throw new Error('Mittauksia on yli 100000; jakson latausraja ylittyi.');
+  const lines=['Aika;Betoni1_C;Betoni2_C;Ymparisto_C;Ilmankosteus_RH'];
+  for(const r of all)lines.push([cloudTime(r.measured_at),cloudValue(r.concrete_1_c),cloudValue(r.concrete_2_c),cloudValue(r.ambient_c),cloudValue(r.humidity_pct)].join(';'));
+  showCsv(lines.join('\n')+'\n','Pilvi: loggeri '+loggerId+', jakso '+sessionId);
+  cloudNotice('Ladattu '+all.length+' mittausta. Käyrä näkyy alempana Historia-osiossa.');
+ }catch(err){cloudNotice('Mittausjakson lataus epäonnistui: '+err.message)}
+}
+el('loadCloud').addEventListener('click',loadCloudPeriods);
+
 // Tyhjä CSV-kenttä ei ole nolla astetta. Vanhat 4-sarakkeiset CSV:t hyväksytään.
 function csvNumber(value){
  if(value===undefined || value===null || String(value).trim()==='')return NaN;
@@ -126,7 +184,7 @@ function showCsv(content,name){
  }).filter(r=>[r.t1,r.t2,r.ambient,r.humidity].some(Number.isFinite));
  if(!rows.length)throw new Error('Tiedostosta ei löytynyt kelvollisia mittauksia.');
  currentRows=rows;importedCsv=content;
- el('csvInfo').textContent=name+' – '+rows.length+' mittausta (vain tällä laitteella)';
+ el('csvInfo').textContent=name+' – '+rows.length+' mittausta';
  el('exportCsv').disabled=false;redrawCharts();
 }
 function redrawCharts(){drawChart('graph',currentRows,'temperature');drawChart('humidityGraph',currentRows,'humidity')}
@@ -199,3 +257,4 @@ el('exportCsv').addEventListener('click',()=>{
  const link=document.createElement('a');link.href=url;link.download='betoniloggeri_mittaukset.csv';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 </script></body></html>
+```
