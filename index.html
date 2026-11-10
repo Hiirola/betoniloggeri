@@ -1,4 +1,3 @@
-```
 <!doctype html>
 <html lang="fi">
 <head>
@@ -14,7 +13,7 @@
 <div class="grid"><section class="panel"><div class="label">Betoni 1</div><div class="reading" id="temp1">— °C</div></section><section class="panel"><div class="label">Betoni 2</div><div class="reading" id="temp2">— °C</div></section></div>
 <div class="grid"><section class="panel"><div class="label">Ympäristön lämpötila</div><div class="reading" id="ambientTemp">— °C</div></section><section class="panel"><div class="label">Ilman suhteellinen kosteus</div><div class="reading" id="humidity">— %</div></section></div><p class="muted small">Ympäristön lämpötila ja ilmankosteus mitataan SHT45-anturilla. Anturi sijoitetaan kotelon sisälle.</p>
 <section class="panel"><h2 style="margin-top:0;font-size:1.1rem">Loggerin tila</h2><div class="row"><span>Mittaus käynnissä</span><strong id="measurement">—</strong></div><div class="row"><span>Mittausjakso</span><strong id="period">—</strong></div><div class="row"><span>Jakson mittauksia</span><strong id="count">—</strong></div><div class="row"><span>Tiedostomuisti</span><strong id="storage">—</strong></div><div class="row"><span>Anturilukeman aika</span><strong id="timestamp">—</strong></div></section>
-</div><div id="history" class="hidden"><section class="panel"><h2>Pilvihistoria</h2><p class="muted small">Pilveen viimeksi synkronoidut mittaukset näkyvät myös ilman Bluetooth-yhteyttä.</p><div class="buttons"><button id="loadCloud">Hae pilvitiedot</button></div><p id="cloudNotice" class="muted small">Pilvitietoja ei ole vielä haettu.</p><div id="cloudPeriods"></div></section><section class="panel"><h2>Mittauskäyrä</h2><p class="muted small">Voit myös hakea mittausjaksot suoraan loggerilta Bluetoothilla tai avata CSV-tiedoston.</p><div class="buttons"><button id="loadPeriods" disabled>Hae jaksot Bluetoothilla</button></div><p id="historyNotice" class="muted small">Yhdistä loggeriin Mittaus-välilehdellä.</p><div id="periodList"></div><hr style="border:0;border-top:1px solid #34465d;margin:20px 0"><label for="csv">Tai avaa mittausjakson CSV-tiedosto</label><input class="fileinput" type="file" id="csv" accept=".csv,text/csv"><p id="csvInfo" class="muted small">Ei ladattua tiedostoa</p><div class="chart-options" aria-label="Näytettävät lämpötilakäyrät"><label><input type="checkbox" id="showT1" checked> Betoni 1</label><label><input type="checkbox" id="showT2" checked> Betoni 2</label><label><input type="checkbox" id="showAmbient" checked> Ympäristö</label></div><canvas id="graph" width="580" height="270" aria-label="Lämpötila ajan funktiona"></canvas><p class="chart-note">Vaaka-akseli: mittausaika. Pystyakseli: lämpötila (°C).</p><h3 style="font-size:1rem;margin:20px 0 10px">Ilman suhteellinen kosteus</h3><canvas id="humidityGraph" width="580" height="270" aria-label="Ilmankosteus ajan funktiona"></canvas><p class="muted small">Uusissa CSV-tiedostoissa näkyvät myös SHT45:n mittaukset. Vanhat nelisarakkeiset tiedostot toimivat edelleen.</p><div class="buttons"><button id="exportCsv" class="secondary" disabled>Lataa avattu CSV</button></div></section></div><div id="settings" class="hidden"><section class="panel"><h2>Asetukset ja käyttöoikeudet</h2><div class="row"><span>Yhteystapa</span><strong>Bluetooth</strong></div><div class="row"><span>Pilvisynkronointi</span><span class="pill">Ei vielä käytössä</span></div><div class="row"><span>Työmaakohtaiset oikeudet</span><span class="pill">Suunniteltu</span></div><div class="row"><span>Loggerikohtaiset oikeudet</span><span class="pill">Suunniteltu</span></div><p class="hint small">Käyttöoikeuksia ei vielä tarkisteta. Ennen pilven käyttöönottoa rakennamme kirjautumisen ja palvelimella tapahtuvan oikeustarkistuksen.</p></section></div><p class="muted small">Ensimmäinen versio on vain lukemista varten. Arvot päivittyvät yhdistettynä noin 10 sekunnin välein ja Päivitä tiedot -painikkeella. Suorat anturilukemat vaativat BLE-yhteyden; pilvihistoria toimii ilman sitä.</p>
+</div><div id="history" class="hidden"><section class="panel"><h2>Pilvihistoria</h2><p class="muted small">Pilveen viimeksi synkronoidut mittaukset näkyvät myös ilman Bluetooth-yhteyttä.</p><div class="buttons"><button id="loadCloud">Hae pilvitiedot</button></div><p id="cloudNotice" class="muted small">Pilvitietoja ei ole vielä haettu.</p><div id="cloudPeriods"></div></section><section class="panel"><h2>Mittauskäyrä</h2><p class="muted small">Voit myös hakea mittausjaksot suoraan loggerilta Bluetoothilla tai avata CSV-tiedoston.</p><div class="buttons"><button id="loadPeriods" disabled>Hae jaksot Bluetoothilla</button><button id="syncNow" class="secondary" disabled>Synkronoi nyt</button></div><p id="syncNotice" class="muted small">Yhdistä Bluetoothilla synkronointia varten.</p><p id="historyNotice" class="muted small">Yhdistä loggeriin Mittaus-välilehdellä.</p><div id="periodList"></div><hr style="border:0;border-top:1px solid #34465d;margin:20px 0"><label for="csv">Tai avaa mittausjakson CSV-tiedosto</label><input class="fileinput" type="file" id="csv" accept=".csv,text/csv"><p id="csvInfo" class="muted small">Ei ladattua tiedostoa</p><div class="chart-options" aria-label="Näytettävät lämpötilakäyrät"><label><input type="checkbox" id="showT1" checked> Betoni 1</label><label><input type="checkbox" id="showT2" checked> Betoni 2</label><label><input type="checkbox" id="showAmbient" checked> Ympäristö</label></div><canvas id="graph" width="580" height="270" aria-label="Lämpötila ajan funktiona"></canvas><p class="chart-note">Vaaka-akseli: mittausaika. Pystyakseli: lämpötila (°C).</p><h3 style="font-size:1rem;margin:20px 0 10px">Ilman suhteellinen kosteus</h3><canvas id="humidityGraph" width="580" height="270" aria-label="Ilmankosteus ajan funktiona"></canvas><p class="muted small">Uusissa CSV-tiedostoissa näkyvät myös SHT45:n mittaukset. Vanhat nelisarakkeiset tiedostot toimivat edelleen.</p><div class="buttons"><button id="exportCsv" class="secondary" disabled>Lataa avattu CSV</button></div></section></div><div id="settings" class="hidden"><section class="panel"><h2>Asetukset ja käyttöoikeudet</h2><div class="row"><span>Yhteystapa</span><strong>Bluetooth</strong></div><div class="row"><span>Pilvisynkronointi</span><span class="pill">Automaattinen Bluetooth-yhteydellä</span></div><div class="row"><span>Työmaakohtaiset oikeudet</span><span class="pill">Suunniteltu</span></div><div class="row"><span>Loggerikohtaiset oikeudet</span><span class="pill">Suunniteltu</span></div><p class="hint small">Käyttöoikeuksia ei vielä tarkisteta. Prototyyppi: pilveen lähettäminen on avoin eikä vielä sovellu julkiseen kaupalliseen käyttöön.</p></section></div><p class="muted small">Ensimmäinen versio on vain lukemista varten. Arvot päivittyvät yhdistettynä noin 10 sekunnin välein ja Päivitä tiedot -painikkeella. Suorat anturilukemat vaativat BLE-yhteyden; pilvihistoria toimii ilman sitä.</p>
 </main><script>
 'use strict';
 const SUPABASE_URL='https://qijwytwsmghlntvhykti.supabase.co';
@@ -25,7 +24,7 @@ const READINGS='5c3bca02-0c8f-4a1e-a1b4-49b5d3345d10';
 const HISTORY_REQUEST='5c3bca03-0c8f-4a1e-a1b4-49b5d3345d10';
 const HISTORY_REPLY='5c3bca04-0c8f-4a1e-a1b4-49b5d3345d10';
 const el=id=>document.getElementById(id);
-let device=null,server=null,statusChar=null,readingsChar=null,requestChar=null,replyChar=null,interval=null,busy=false,transferring=false;
+let device=null,server=null,statusChar=null,readingsChar=null,requestChar=null,replyChar=null,interval=null,busy=false,transferring=false,syncing=false,loggerId="";
 const decoder=new TextDecoder('utf-8');
 function parse(value){const out={};for(const pair of value.split(';')){const pos=pair.indexOf('=');if(pos>0)out[pair.slice(0,pos).trim()]=pair.slice(pos+1).trim()}return out}
 function showNotice(msg){el('notice').textContent=msg}
@@ -34,10 +33,10 @@ function clearReadings(){for(const id of ['temp1','temp2','ambientTemp','humidit
 function onDisconnected(){if(interval){clearInterval(interval);interval=null}server=null;statusChar=null;readingsChar=null;requestChar=null;replyChar=null;transferring=false;setConnected(false);updateHistoryButtons();clearReadings();showNotice('Bluetooth-yhteys katkesi. Yhdistä uudelleen.')}
 function renderStatus(s){el('measurement').textContent=s.mittaus==='KYLLA'?'Kyllä':s.mittaus==='EI'?'Ei':'—';el('period').textContent=s.jakso||'—';el('count').textContent=s.lukemia||'—';el('storage').textContent=s.muisti==='OK'?'OK':s.muisti==='VIRHE'?'VIRHE':'—';el('storage').className=s.muisti==='OK'?'ok':s.muisti==='VIRHE'?'bad':''}
 function renderReadings(r){const valid=r.tila==='OK';for(const [id,key] of [['temp1','t1'],['temp2','t2']]){const raw=r[key],value=Number(raw);const missing=raw===undefined||raw===''||raw==='nan'||raw==='NaN'||!Number.isFinite(value)||(key==='t2'&&value===0);el(id).textContent=valid&&!missing?value.toFixed(1).replace('.',',')+' °C':(key==='t2'&&valid?'Ei anturia':'— °C')}const ambient=Number(r.ymparisto),humidity=Number(r.kosteus);el('ambientTemp').textContent=valid&&r.ymparisto!==undefined&&Number.isFinite(ambient)?ambient.toFixed(1).replace('.',',')+' °C':'— °C';el('humidity').textContent=valid&&r.kosteus!==undefined&&Number.isFinite(humidity)?humidity.toFixed(1).replace('.',',')+' %':'— %';el('timestamp').textContent=valid?r.aika||'—':'—';if(!valid)showNotice('Antureiden lukemisessa on virhe: '+(r.tila||'tuntematon'))}
-async function refresh(){if(busy||transferring||!server?.connected)return;busy=true;el('refresh').disabled=true;try{const s=decoder.decode(await statusChar.readValue());const r=decoder.decode(await readingsChar.readValue());renderStatus(parse(s));renderReadings(parse(r));if(parse(r).tila==='OK')showNotice('Tiedot luettu loggerilta.')}catch(err){showNotice('Luku epäonnistui: '+err.message)}finally{busy=false;el('refresh').disabled=!server?.connected}}
+async function refresh(){if(busy||transferring||syncing||!server?.connected)return;busy=true;el('refresh').disabled=true;try{const s=decoder.decode(await statusChar.readValue());const r=decoder.decode(await readingsChar.readValue());renderStatus(parse(s));if(parse(s).id)loggerId=parse(s).id;renderReadings(parse(r));if(parse(r).tila==='OK')showNotice('Tiedot luettu loggerilta.')}catch(err){showNotice('Luku epäonnistui: '+err.message)}finally{busy=false;el('refresh').disabled=!server?.connected}}
 el('connect').addEventListener('click',async()=>{if(!navigator.bluetooth){showNotice('Web Bluetooth ei ole käytettävissä. Käytä Androidin Chromea ja avaa sivu HTTPS-osoitteesta.');return}el('connect').disabled=true;showNotice('Valitse Bluetooth-laitteista Betoniloggeri.');try{device=await navigator.bluetooth.requestDevice({filters:[{name:'Betoniloggeri'}],optionalServices:[SERVICE]});device.addEventListener('gattserverdisconnected',onDisconnected);server=await device.gatt.connect();const service=await server.getPrimaryService(SERVICE);statusChar=await service.getCharacteristic(STATUS);readingsChar=await service.getCharacteristic(READINGS);
 try{requestChar=await service.getCharacteristic(HISTORY_REQUEST);replyChar=await service.getCharacteristic(HISTORY_REPLY)}catch(err){requestChar=null;replyChar=null;}
-setConnected(true);updateHistoryButtons();await refresh();interval=setInterval(refresh,10000)}catch(err){onDisconnected();showNotice('Yhdistäminen epäonnistui tai peruttiin: '+err.message)}finally{if(!server?.connected)el('connect').disabled=false}});
+setConnected(true);updateHistoryButtons();await refresh();interval=setInterval(refresh,10000);syncAll().catch(err=>syncNotice("Synkronointi epäonnistui: "+err.message))}catch(err){onDisconnected();showNotice('Yhdistäminen epäonnistui tai peruttiin: '+err.message)}finally{if(!server?.connected)el('connect').disabled=false}});
 el('refresh').addEventListener('click',refresh);
 el('disconnect').addEventListener('click',()=>{if(device?.gatt?.connected)device.gatt.disconnect();else onDisconnected()});
 if(!window.isSecureContext)showNotice('Bluetooth vaatii HTTPS-yhteyden. Julkaise tämä sivu esimerkiksi GitHub Pagesissa.');
@@ -48,7 +47,7 @@ document.querySelectorAll('[data-tab]').forEach(button=>button.addEventListener(
 }));
 
 // Vain lukevat BLE-historiapyynnöt. Pyyntö ja vastaus ovat eri ominaisuuksissa.
-function updateHistoryButtons(){el('loadPeriods').disabled=!(server?.connected&&requestChar&&replyChar)||transferring}
+function updateHistoryButtons(){el('loadPeriods').disabled=!(server?.connected&&requestChar&&replyChar)||transferring||syncing;el('syncNow').disabled=!(server?.connected&&requestChar&&replyChar)||transferring||syncing}
 function historyNotice(message){el('historyNotice').textContent=message}
 async function historyCommand(command){
  if(!requestChar||!replyChar||!server?.connected)throw new Error('Bluetooth-historiapalvelu ei ole käytettävissä.');
@@ -102,6 +101,76 @@ async function downloadPeriod(number,expectedSize){
  finally{transferring=false;updateHistoryButtons()}
 }
 el('loadPeriods').addEventListener('click',listPeriods);
+// Pilvisynkronointi: CSV luetaan olemassa olevalla BLE-protokollalla.
+function syncNotice(message){el('syncNotice').textContent=message}
+async function readPeriodCsv(number,expectedSize){
+ if(expectedSize>8000000)throw new Error('Jakso liian suuri.');
+ let csv='',offset=0;
+ while(offset<expectedSize){
+  if(!server?.connected)throw new Error('Bluetooth-yhteys katkesi.');
+  const response=await historyCommand('G:'+number+':'+offset);
+  const match=/^D\|(\d+)\|/.exec(response);
+  if(!match||Number(match[1])!==offset)throw new Error('Virheellinen CSV-pala.');
+  const chunk=response.slice(match[0].length);
+  if(!chunk)throw new Error('Tyhjä CSV-pala.');
+  csv+=chunk;offset+=new TextEncoder().encode(chunk).length;
+  if(offset%3200<80)syncNotice('Luetaan jaksoa '+number+': '+Math.round(offset/expectedSize*100)+' %');
+ }
+ if(offset!==expectedSize)throw new Error('CSV jäi kesken.');
+ return csv;
+}
+function rowsForSync(csv,number){
+ const lines=csv.replace(/^\uFEFF/,'').trim().split(/\r?\n/);
+ const columns=lines.shift().split(';');
+ const at=name=>columns.indexOf(name);
+ if(at('Aika')<0||at('Betoni1_C')<0||at('Betoni2_C')<0)throw new Error('CSV-otsikot puuttuvat.');
+ return lines.filter(line=>line.trim()).map((line,i)=>{
+  const parts=line.split(';');
+  const raw=parts[at('Aika')]?.trim();
+  const epoch=csvTime(raw);
+  const num=name=>{const v=at(name)>=0?csvNumber(parts[at(name)]):NaN;return Number.isFinite(v)?v:null};
+  const csvIndex=at('Mittaus');
+  const measurementNumber=csvIndex>=0?Number(parts[csvIndex]):i+1;
+  if(!Number.isSafeInteger(measurementNumber)||measurementNumber<1)throw new Error('Virheellinen mittausnumero.');
+  return {logger_id:loggerId,session_id:'jakso_'+number,measurement_number:measurementNumber,
+   measured_at:Number.isFinite(epoch)?new Date(epoch).toISOString():null,
+   concrete_1_c:num('Betoni1_C'),concrete_2_c:num('Betoni2_C'),
+   ambient_c:num('Ymparisto_C'),humidity_pct:num('Ilmankosteus_RH')};
+ });
+}
+async function syncAll(){
+ if(syncing||transferring||!server?.connected||!requestChar||!replyChar)return;
+ syncing=true;updateHistoryButtons();
+ try{
+  if(!/^BL-[0-9A-F]{12}$/.test(loggerId))throw new Error('Laitetunnusta ei saatu Bluetoothista. Tarkista ohjelmaversio.');
+  let periods=0,total=0;
+  for(let i=0;i<1000;i++){
+   const response=await historyCommand('L:'+i);
+   if(response==='E|')break;
+   const match=/^J\|(\d+)\|(\d+)$/.exec(response);
+   if(!match)throw new Error('Jaksolistan vastaus virheellinen.');
+   const number=Number(match[1]),size=Number(match[2]);
+   syncNotice('Luetaan mittausjaksoa '+number+'...');
+   const rows=rowsForSync(await readPeriodCsv(number,size),number);
+   for(let j=0;j<rows.length;j+=500){
+    const batch=rows.slice(j,j+500);
+    syncNotice('Lähetetään jaksoa '+number+': '+Math.min(j+500,rows.length)+'/'+rows.length);
+    const res=await fetch(SUPABASE_URL+'/functions/v1/logger-sync',{
+     method:'POST',headers:{'Content-Type':'application/json','apikey':SUPABASE_KEY},
+     body:JSON.stringify({measurements:batch})
+    });
+    if(!res.ok)throw new Error('Supabase HTTP '+res.status+': '+(await res.text()).slice(0,180));
+    const ack=await res.json();
+    if(!ack.success)throw new Error('Palvelin ei vahvistanut tallennusta.');
+   }
+   periods++;total+=rows.length;
+  }
+  syncNotice('Synkronointi valmis: '+periods+' jaksoa, '+total+' mittausta käsitelty.');
+ }catch(err){syncNotice('Synkronointi epäonnistui: '+err.message);throw err}
+ finally{syncing=false;updateHistoryButtons()}
+}
+el('syncNow').addEventListener('click',()=>syncAll().catch(()=>{}));
+
 // Pilvihistorian julkinen, vain lukeva yhteys. Ei muuta Bluetooth-toimintoja.
 const cloudHeaders={apikey:SUPABASE_KEY};
 async function cloudGet(query){
@@ -257,4 +326,3 @@ el('exportCsv').addEventListener('click',()=>{
  const link=document.createElement('a');link.href=url;link.download='betoniloggeri_mittaukset.csv';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 });
 </script></body></html>
-```
